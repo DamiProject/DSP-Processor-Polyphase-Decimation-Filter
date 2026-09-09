@@ -16,7 +16,7 @@ This block requires MATLAB and the standard toolboxes used for digital signal pr
 
 * **MATLAB** (Recommended: R2023a or newer)
   
-* **Signal Processing Toolbox** (Required for Butterworth filter coefficient generation using `butter` and `sos2tf`)
+* **Signal Processing Toolbox** 
 
 ---
 
