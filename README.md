@@ -2,6 +2,16 @@
 
 **Status: Under Active Development**
 
+---
+
+## Author
+
+**Damilola Ibukun Awotunde**
+
+MEng, Communications & Signal Processing - Western University | [LinkedIn](https://www.linkedin.com/in/damilola-awotunde) 
+
+---
+
 ## Overview
 
 This repository houses the codebase for a modular, object-oriented digital signal processing (DSP) decimation filter in MATLAB. Designed to organize and contain the underlying implementation rather than serve as a demonstration or activity suite, it includes both a floating-point **"Golden Reference"** polyphase decimation filter and its fixed-point counterpart. It explores two main areas:
@@ -10,13 +20,63 @@ This repository houses the codebase for a modular, object-oriented digital signa
 
 **2. Software Engineering Paradigms:** Object-oriented programming (OOP), unit testing, integration testing, code reusability, and modularity.
 
-### Prerequisites & Dependencies
+## How to Run
 
-This block requires MATLAB and the standard toolboxes used for digital signal processing and filter design:
+This repository contains the reusable implementation and verification codebase. The primary standalone execution path is the automated test suite.
 
-* **MATLAB** (Recommended: R2023a or newer)
-  
-* **Signal Processing Toolbox** 
+### Requirements
+
+- MATLAB
+- Signal Processing Toolbox
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/DamiProject/DSP-Processor-Polyphase-Decimation-Filter.git
+cd DSP-Processor-Polyphase-Decimation-Filter
+```
+
+### 2. Run the Test Suite
+
+Open MATLAB and navigate to the repository root, then run:
+
+```matlab
+DSPRunTests
+```
+
+`DSPRunTests.m` automatically adds the `Design` directory and its subdirectories to the MATLAB path, then executes all unit and integration tests contained in the `Tests` directory.
+
+The test suite verifies both the floating-point polyphase decimator and the fixed-point implementation, including polyphase decomposition, FIR response, fixed-point arithmetic, coefficient representation, MAC processing, and floating-point versus fixed-point integration.
+
+The repository structure is:
+
+```text
+DSP-Processor-Polyphase-Decimation-Filter/
+├── Design/
+│   ├── DSPMeta.m
+│   ├── DSPParameters.m
+│   │
+│   ├── FIR Floating/
+│   │   └── DSP.m
+│   │
+│   └── FIR Fixed/
+│       ├── FixedDSPDecimator.m
+│       ├── FixedToRealConverter.m
+│       ├── FindCoefficientFormat.m
+│       ├── FindMACFormat.m
+│       └── FindResponseResolution.m
+│
+├── Tests/
+│   ├── Unit Tests/
+│   │   ├── Floating/
+│   │   └── Fixed/
+│   │
+│   └── Integration Tests/
+│
+└── DSPRunTests.m
+```
+
+A successful run completes all tests without an assertion failure.
 
 ---
 
@@ -55,10 +115,4 @@ Building on the floating-point baseline, this module simulates the physical real
 
 **- Quantization Degradation Analysis:** By running the fixed-point logic side-by-side with the "golden reference," this stage directly evaluates the resulting quantization noise floor and SNR degradation, proving the optimized bit-widths still satisfy the system's strict frequency response requirements.
 
----
 
-## Author
-
-**Damilola Ibukun Awotunde**
-
-MEng, Communications & Signal Processing - Western University | [LinkedIn](https://www.linkedin.com/in/damilola-awotunde) 
