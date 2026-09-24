@@ -25,7 +25,6 @@ jobs:
       - name: Checkout Polyphase Repository
         uses: actions/checkout@v6
 
-
       # ============================================================
       # MATLAB ENVIRONMENT
       # ============================================================
@@ -36,7 +35,6 @@ jobs:
           products: Signal_Processing_Toolbox
           cache: true
 
-
       # ============================================================
       # POLYPHASE VERIFICATION
       # ============================================================
@@ -45,7 +43,6 @@ jobs:
         uses: matlab-actions/run-command@v3
         with:
           command: DSPRunTests
-
 
       # ============================================================
       # TEST EVIDENCE
@@ -59,3 +56,40 @@ jobs:
           path: test-results/
           if-no-files-found: warn
           retention-days: 30
+
+  # ============================================================
+  # POLYPHASE TO SYSTEM INTEGRATION TRIGGER
+  # ============================================================
+
+  trigger_integration:
+    name: Trigger System Integration
+    needs: polyphase_test
+
+    if: >
+      needs.polyphase_test.result == 'success' &&
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Trigger System Integration CI
+        env:
+          DISPATCH_TOKEN: ${{ secrets.INTEGRATION_DISPATCH_TOKEN }}
+
+        run: |
+          curl --fail-with-body \
+            -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $DISPATCH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2026-03-10" \
+            https://api.github.com/repos/DamiProject/System-Integration-ADC-Polyphase-Decimation-Filter/dispatches \
+            -d '{
+              "event_type": "polyphase-updated",
+              "client_payload": {
+                "source_repository": "${{ github.repository }}",
+                "source_sha": "${{ github.sha }}"
+              }
+            }'
