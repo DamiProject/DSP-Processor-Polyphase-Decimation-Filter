@@ -1,0 +1,61 @@
+name: Polyphase MATLAB CI
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+jobs:
+  polyphase_test:
+    name: Polyphase Verification
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # ============================================================
+      # CHECKOUT POLYPHASE REPOSITORY
+      # ============================================================
+
+      - name: Checkout Polyphase Repository
+        uses: actions/checkout@v6
+
+
+      # ============================================================
+      # MATLAB ENVIRONMENT
+      # ============================================================
+
+      - name: Set up MATLAB
+        uses: matlab-actions/setup-matlab@v3
+        with:
+          products: Signal_Processing_Toolbox
+          cache: true
+
+
+      # ============================================================
+      # POLYPHASE VERIFICATION
+      # ============================================================
+
+      - name: Run Polyphase Tests
+        uses: matlab-actions/run-command@v3
+        with:
+          command: DSPRunTests
+
+
+      # ============================================================
+      # TEST EVIDENCE
+      # ============================================================
+
+      - name: Upload Polyphase Test Reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: polyphase-test-reports
+          path: test-results/
+          if-no-files-found: warn
+          retention-days: 30
