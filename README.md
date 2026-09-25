@@ -1,5 +1,7 @@
 # DSP-Processor-Polyphase-Decimation-Filter
 
+[![Polyphase Decimation Filter Unit Tests](https://github.com/DamiProject/DSP-Processor-Polyphase-Decimation-Filter/actions/workflows/matlab-ci.yml/badge.svg?branch=main)](https://github.com/DamiProject/DSP-Processor-Polyphase-Decimation-Filter/actions/workflows/matlab-ci.yml)
+
 **Status: Under Active Development**
 
 ---
