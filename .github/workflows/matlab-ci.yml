@@ -1,4 +1,4 @@
-name: Polyphase MATLAB CI
+name: Polyphase Decimation Filter Unit Tests
 
 on:
   push:
